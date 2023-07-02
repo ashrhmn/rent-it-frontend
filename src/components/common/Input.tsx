@@ -1,15 +1,17 @@
-import { HTMLInputTypeAttribute } from "react";
+import { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 
 const Input = ({
-  inputProps,
+  regProps,
   label,
   error,
   type = "text",
+  otherProps,
 }: {
   label: string;
-  inputProps: any;
   error?: string;
   type?: HTMLInputTypeAttribute;
+  regProps?: any;
+  otherProps?: InputHTMLAttributes<HTMLInputElement>;
 }) => {
   return (
     <div className="form-control w-full max-w-xs">
@@ -19,7 +21,8 @@ const Input = ({
       <input
         type={type}
         className="input input-primary w-full max-w-xs"
-        {...inputProps}
+        {...regProps}
+        {...otherProps}
       />
       {!!error && <p className="text-error">{error}</p>}
     </div>

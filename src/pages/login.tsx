@@ -47,12 +47,12 @@ const Login = () => {
       >
         <Input
           label="Username or Email"
-          inputProps={register("usernameOrEmail")}
+          regProps={register("usernameOrEmail")}
           error={errors.usernameOrEmail?.message}
         />
         <Input
           label="Password"
-          inputProps={register("password")}
+          regProps={register("password")}
           error={errors.password?.message}
           type="password"
         />
