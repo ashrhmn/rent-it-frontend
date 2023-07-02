@@ -34,14 +34,40 @@ const mapError = (error: string): string => {
 
 export const extractError = (error: unknown) => {
   console.log("Raw Error : ", error);
-  // const parsedError = getParsedEthersError(error as any).context;
+  if (typeof error === "string")
+    error = (() => {
+      try {
+        return JSON.parse(error as any);
+      } catch (error) {
+        return error;
+      }
+    })();
+
+  if (
+    ZodUtils.followsSchema(
+      error,
+      z
+        .object({
+          extensions: z.object({
+            originalError: z.object({
+              message: z.string().array(),
+            }),
+          }),
+        })
+        .array()
+    )
+  ) {
+    return error
+      .map((e) => e.extensions.originalError.message.join("\n"))
+      .join("\n");
+  }
+
   if (
     ZodUtils.followsSchema(error, z.object({ message: z.string() }).array())
   ) {
     return error.map((e) => e.message).join("\n");
   } else if (hasBadRequestExceptionMessage(error))
     return mapError(error.response.data.message);
-  // else if (typeof parsedError === "string") return mapError(parsedError);
   else if (hasErrorMessage(error)) return mapError(error.message);
   else if (typeof error === "string") return mapError(error);
   else return "An unknown error occurred";
