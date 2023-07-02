@@ -4,6 +4,7 @@ import { handleError } from "@/utils/error.utils";
 import { promiseToast } from "@/utils/toast.utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -15,11 +16,12 @@ const loginFormSchema = z.object({
 type ILoginFormData = z.infer<typeof loginFormSchema>;
 
 const Login = () => {
+  const router = useRouter();
   const handleLogin = async (data: ILoginFormData) => {
     promiseToast(
       tquery({
         login: [{ data }, { accessToken: true, refreshToken: true }],
-      }),
+      }).then(() => router.replace("/dashboard")),
       {
         loading: "Logging in...",
         success: "Logged in!",

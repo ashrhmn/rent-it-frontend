@@ -1,14 +1,13 @@
 import { tquery } from "@/tgql";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const useRouteData = () => {
   const router = useRouter();
-  const [redirectTo, setRedirectTo] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { data, status } = useQuery(
-    ["current-user"],
+    ["current-user", router.pathname],
     () =>
       tquery({
         currentUser: {
@@ -18,34 +17,37 @@ const useRouteData = () => {
           username: true,
         },
       }),
-    {}
+    {
+      retry: false,
+      refetchInterval: 10000,
+      keepPreviousData: false,
+    }
   );
 
-  useEffect(() => {
-    if (redirectTo) router.push(redirectTo);
-  }, [redirectTo, router]);
+  const isLoginSignUpRoute = useMemo(() => {
+    if (["/login", "/sign-up"].some((path) => router.pathname.startsWith(path)))
+      return true;
+    return false;
+  }, [router.pathname]);
+
+  const isProtectedRoute = useMemo(() => {
+    if (router.pathname.startsWith("/dashboard")) return true;
+    return false;
+  }, [router.pathname]);
 
   useEffect(() => {
-    if (router.pathname.startsWith("/login")) {
-      if (status === "success") {
-        setRedirectTo("/dashboard");
-      } else {
-        setIsLoading(false);
-      }
+    if (!isLoginSignUpRoute && !isProtectedRoute) setIsLoading(false);
+    if (isLoginSignUpRoute) {
+      if (status === "success") router.replace("/dashboard");
+      if (status === "error") setIsLoading(false);
     }
-  }, [router.pathname, status]);
-
-  useEffect(() => {
-    if (router.pathname.startsWith("/dashboard")) {
-      if (status === "success") {
-        setRedirectTo("/");
-      } else {
-        setIsLoading(false);
-      }
+    if (isProtectedRoute) {
+      if (status === "error") router.replace("/login");
+      if (status === "success") setIsLoading(false);
     }
-  }, [router.pathname, status]);
+  }, [isLoginSignUpRoute, isProtectedRoute, router, status]);
 
-  return {};
+  return { isLoading, user: data?.currentUser };
 };
 
 export default useRouteData;

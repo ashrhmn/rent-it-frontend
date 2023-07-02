@@ -5,6 +5,7 @@ import { handleError } from "@/utils/error.utils";
 import { promiseToast } from "@/utils/toast.utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -36,11 +37,17 @@ const signUpFormSchema = z
 type ISignUpFormData = z.infer<typeof signUpFormSchema>;
 
 const SignUp = () => {
+  const router = useRouter();
   const handleSignUp = async (data: ISignUpFormData) =>
-    promiseToast(tmutate({ signUp: [{ data }, true] }), {
-      loading: "Sign Up in progress...",
-      success: "Successful!",
-    }).catch(handleError);
+    promiseToast(
+      tmutate({ signUp: [{ data }, true] }).then(() =>
+        router.replace("/login")
+      ),
+      {
+        loading: "Sign Up in progress...",
+        success: "Successful!",
+      }
+    ).catch(handleError);
   const {
     register,
     formState: { errors },

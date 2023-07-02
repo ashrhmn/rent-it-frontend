@@ -1,12 +1,7 @@
+import useRouteData from "@/hooks/useRouteData";
 import "@/styles/globals.css";
-import { tquery } from "@/tgql";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 
@@ -25,29 +20,20 @@ export default function App({ Component, pageProps }: AppProps) {
 }
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
-  const router = useRouter();
-  const { data, status } = useQuery(
-    ["current-user"],
-    () =>
-      tquery({
-        currentUser: {
-          email: true,
-          id: true,
-          permissions: true,
-          username: true,
-        },
-      }),
-    {}
-  );
-
+  const { isLoading, user } = useRouteData();
+  if (isLoading) return <Loading />;
   return (
     <>
-      <pre className="fixed opacity-40">{JSON.stringify(data, null, 2)}</pre>
+      <pre className="fixed opacity-40">{JSON.stringify(user, null, 2)}</pre>
       <>{children}</>
     </>
   );
 };
 
 const Loading = () => {
-  return <div>Loading...</div>;
+  return (
+    <div className="h-screen w-full flex justify-center items-center">
+      <h1>Loading...</h1>
+    </div>
+  );
 };
