@@ -1,28 +1,11 @@
-import { tquery } from "@/tgql";
-import { useQuery } from "@tanstack/react-query";
+import useCurrentUser from "@/hooks/useCurrentUser";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
 const useRouteData = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
-  const { data, status } = useQuery(
-    ["current-user", router.pathname],
-    () =>
-      tquery({
-        currentUser: {
-          email: true,
-          id: true,
-          permissions: true,
-          username: true,
-        },
-      }),
-    {
-      retry: false,
-      refetchInterval: 10000,
-      keepPreviousData: false,
-    }
-  );
+  const { data, status } = useCurrentUser();
 
   const isLoginSignUpRoute = useMemo(() => {
     if (["/login", "/sign-up"].some((path) => router.pathname.startsWith(path)))

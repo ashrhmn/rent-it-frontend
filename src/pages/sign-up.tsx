@@ -3,6 +3,7 @@ import { tmutate } from "@/tgql";
 import { getTimestampFromDateInputEvent } from "@/utils/date-time.utils";
 import { handleError } from "@/utils/error.utils";
 import { promiseToast } from "@/utils/toast.utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -18,7 +19,7 @@ const signUpFormSchema = z
     password: z
       .string()
       .min(1, "Password is required")
-      .min(8, "Username must be at least 8 characters"),
+      .min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
     dateOfBirth: z.number(),
   })
@@ -60,7 +61,7 @@ const SignUp = () => {
       confirmPassword: "",
       username: "",
     },
-    // resolver: zodResolver(signUpFormSchema),
+    resolver: zodResolver(signUpFormSchema),
   });
   return (
     <div className="h-screen w-full flex justify-center items-center">
@@ -68,6 +69,7 @@ const SignUp = () => {
         className="p-3 bg-base-100 rounded-xl"
         onSubmit={handleSubmit(handleSignUp)}
       >
+        <h1 className="text-2xl font-bold">Sign Up for a new account</h1>
         <Input
           label="Username"
           regProps={register("username")}

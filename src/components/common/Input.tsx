@@ -16,7 +16,7 @@ const Input = ({
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
-        <span className="label-text">{label}</span>
+        <span className="label-text font-bold">{label}</span>
       </label>
       <input
         type={type}

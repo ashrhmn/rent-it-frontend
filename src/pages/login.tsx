@@ -42,11 +42,12 @@ const Login = () => {
   });
 
   return (
-    <div className="h-screen w-full flex justify-center items-center">
+    <div className="h-screen w-full flex flex-col justify-center items-center">
       <form
         className="p-3 bg-base-100 rounded-xl"
         onSubmit={handleSubmit(handleLogin)}
       >
+        <h1 className="text-2xl font-bold">Login with your credentials</h1>
         <Input
           label="Username or Email"
           regProps={register("usernameOrEmail")}
