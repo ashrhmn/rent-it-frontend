@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 
-const DashboardLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const handleLogoutClick = () =>
     tmutate({ logout: true })
@@ -76,4 +76,4 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default DashboardLayout;
+export default RootLayout;
