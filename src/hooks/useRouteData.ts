@@ -15,6 +15,8 @@ const useRouteData = () => {
 
   const isProtectedRoute = useMemo(() => {
     if (router.pathname.startsWith("/dashboard")) return true;
+    if (router.pathname.startsWith("/profile/")) return false;
+    if (router.pathname === "/profile") return true;
     return false;
   }, [router.pathname]);
 
@@ -30,7 +32,12 @@ const useRouteData = () => {
     }
   }, [isLoginSignUpRoute, isProtectedRoute, router, status]);
 
-  return { isLoading, user: data?.currentUser };
+  return {
+    isLoading,
+    user: data?.currentUser,
+    isLoginSignUpRoute,
+    isProtectedRoute,
+  };
 };
 
 export default useRouteData;
