@@ -18,6 +18,7 @@ export const tgql = Thunder(async (query) => {
 
   if (!response.ok) {
     const text = await response.text();
+
     try {
       throw JSON.parse(text);
     } catch (error) {

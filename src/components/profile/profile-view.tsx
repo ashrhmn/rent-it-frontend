@@ -1,3 +1,5 @@
+import AddReviewPanel from "@/components/profile/add-review-panel";
+import OtherPeopleReviews from "@/components/profile/other-people-reviews";
 import { profile_type } from "@/generated/zeus";
 
 const ProfileView = ({
@@ -36,6 +38,8 @@ const ProfileView = ({
           />
         </div>
       </div>
+      {!viewerIsOwner && <AddReviewPanel profileId={profile.id} />}
+      <OtherPeopleReviews profileId={profile.id} />
     </div>
   );
 };

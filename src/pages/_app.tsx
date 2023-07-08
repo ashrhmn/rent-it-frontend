@@ -4,7 +4,7 @@ import useRouteData from "@/hooks/useRouteData";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -23,14 +23,17 @@ export default function App({ Component, pageProps }: AppProps) {
 
 const Wrapper = ({ children }: { children: ReactNode }) => {
   const { isLoading, isLoginSignUpRoute } = useRouteData();
-  if (isLoading) return <FullscreenLoading />;
-  if (isLoginSignUpRoute)
-    return (
-      <div data-theme={localStorage.getItem("theme") || "cmyk"}>{children}</div>
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      localStorage.getItem("theme") || "cmyk"
     );
+  }, []);
+  if (isLoading) return <FullscreenLoading />;
+  if (isLoginSignUpRoute) return <div>{children}</div>;
   return (
     <RootLayout>
-      <div data-theme={localStorage.getItem("theme") || "cmyk"}>{children}</div>
+      <div>{children}</div>
     </RootLayout>
   );
 };

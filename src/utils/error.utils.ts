@@ -38,7 +38,7 @@ export const extractError = (error: unknown) => {
     error = (() => {
       try {
         return JSON.parse(error as any);
-      } catch (error) {
+      } catch {
         return error;
       }
     })();

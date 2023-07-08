@@ -28,9 +28,9 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   });
   if (status === "loading") return <FullscreenLoading />;
   return (
-    <>
-      <div className="bg-base-200">
-        <div className="fixed left-0 right-0">
+    <div>
+      <div className="">
+        <div className="fixed left-0 right-0 bg-base-200">
           <nav className="flex navbar max-w-5xl mx-auto">
             <div className="flex-1">Logo</div>
             <div className="flex justify-end items-center">
@@ -82,7 +82,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       ) : (
         <div className="pt-20 max-w-5xl mx-auto px-8">{children}</div>
       )}
-    </>
+    </div>
   );
 };
 

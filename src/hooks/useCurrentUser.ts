@@ -18,7 +18,7 @@ const useCurrentUser = () => {
     {
       retry: false,
       refetchInterval: 10000,
-      keepPreviousData: false,
+      keepPreviousData: true,
     }
   );
 };

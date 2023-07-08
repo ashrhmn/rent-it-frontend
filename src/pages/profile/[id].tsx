@@ -51,7 +51,10 @@ const PublicProfile = () => {
 
   const { data: currentUser } = useCurrentUser();
 
-  if (currentUser?.currentUser.id === profile?.getProfile?.user_id)
+  if (
+    !!currentUser?.currentUser.id &&
+    currentUser?.currentUser.id === profile?.getProfile?.user_id
+  )
     router.replace("/profile");
 
   if (isInvalidId) return <NotFoundPage />;
