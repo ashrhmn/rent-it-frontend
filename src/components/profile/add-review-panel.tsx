@@ -1,10 +1,9 @@
 import ReviewCommentModal from "@/components/profile/review-comment-modal";
 import { tquery } from "@/tgql";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 const AddReviewPanel = ({ profileId }: { profileId: string }) => {
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const { data: reviewCategories } = useQuery({
     queryFn: () => tquery({ getReviewCategories: true }),
     queryKey: ["review-categories"],
@@ -20,6 +19,11 @@ const AddReviewPanel = ({ profileId }: { profileId: string }) => {
       }).then((res) => res.getReviewsOnProfileByLoggedInUser),
     queryKey: ["reviews-by-logged-in-user", profileId],
   });
+
+  const refetch = () => {
+    refetchReviews();
+    queryClient.invalidateQueries(["reviews-public", profileId]);
+  };
 
   return (
     <div>
@@ -39,7 +43,7 @@ const AddReviewPanel = ({ profileId }: { profileId: string }) => {
               category={category}
               stars={stars}
               comment={comment}
-              refetch={refetchReviews}
+              refetch={refetch}
             />
           </div>
         ))}
@@ -60,7 +64,7 @@ const AddReviewPanel = ({ profileId }: { profileId: string }) => {
               <ReviewCommentModal
                 category={category}
                 stars={0}
-                refetch={refetchReviews}
+                refetch={refetch}
               />
             </div>
           ))}
