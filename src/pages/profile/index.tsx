@@ -26,13 +26,13 @@ const OwnProfile = () => {
             user_id: true,
           },
         ],
-      }),
+      }).then(({ getProfile }) => getProfile),
     enabled: !!data?.currentUser.id,
   });
 
   if (status !== "success") return <FullscreenLoading />;
-  if (!profile.getProfile) return <FullscreenLoading />;
-  return <ProfileView profile={profile.getProfile} viewerIsOwner />;
+  if (!profile) return <FullscreenLoading />;
+  return <ProfileView profile={profile} viewerIsOwner />;
 };
 
 export default OwnProfile;

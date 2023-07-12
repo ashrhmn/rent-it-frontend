@@ -1,6 +1,7 @@
 import AddReviewPanel from "@/components/profile/add-review-panel";
 import OtherPeopleReviews from "@/components/profile/other-people-reviews";
 import { profile_type } from "@/generated/zeus";
+import Link from "next/link";
 
 const ProfileView = ({
   profile,
@@ -21,6 +22,7 @@ const ProfileView = ({
   };
   viewerIsOwner?: boolean;
 }) => {
+  console.log({ profile });
   return (
     <div>
       <div className="flex w-full">
@@ -38,6 +40,14 @@ const ProfileView = ({
           />
         </div>
       </div>
+      {!viewerIsOwner && (
+        <Link
+          className="btn btn-link"
+          href={`/submit-tenant-form/${profile.id}`}
+        >
+          Submit Form
+        </Link>
+      )}
       {!viewerIsOwner && <AddReviewPanel profileId={profile.id} />}
       <OtherPeopleReviews profileId={profile.id} />
     </div>

@@ -1,8 +1,7 @@
+import { useRouter } from "next/router";
+
 export default function Home() {
-  return (
-    <div>
-      <h1>Home</h1>
-      <button className="btn">Hello</button>
-    </div>
-  );
+  const router = useRouter();
+  router.replace("/dashboard");
+  return null;
 }

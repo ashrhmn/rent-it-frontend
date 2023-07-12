@@ -11,8 +11,8 @@ import { useState } from "react";
 
 const PublicProfile = () => {
   const router = useRouter();
-  const [isInvalidId, setIsInvalidId] = useState(false);
   const id = typeof router.query.id === "string" ? router.query.id : null;
+  const [isInvalidId, setIsInvalidId] = useState(false);
   useDebounce(
     () => {
       setIsInvalidId(!id);
@@ -44,7 +44,7 @@ const PublicProfile = () => {
             user_id: true,
           },
         ],
-      }),
+      }).then(({ getProfile }) => getProfile),
     enabled: !!id,
     retry: false,
   });
@@ -53,14 +53,14 @@ const PublicProfile = () => {
 
   if (
     !!currentUser?.currentUser.id &&
-    currentUser?.currentUser.id === profile?.getProfile?.user_id
+    currentUser?.currentUser.id === profile?.user_id
   )
     router.replace("/profile");
 
   if (isInvalidId) return <NotFoundPage />;
   if (status === "loading") return <FullscreenLoading />;
   if (status === "error") return <FullScreenError error={error} />;
-  return <ProfileView profile={profile.getProfile} />;
+  return <ProfileView profile={profile} />;
 };
 
 export default PublicProfile;

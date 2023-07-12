@@ -32,7 +32,9 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <div className="">
         <div className="fixed left-0 right-0 bg-base-200">
           <nav className="flex navbar max-w-5xl mx-auto">
-            <div className="flex-1">Logo</div>
+            <Link href={"/dashboard"} className="flex-1">
+              Logo
+            </Link>
             <div className="flex justify-end items-center">
               {status === "success" && (
                 <div className="dropdown dropdown-end">
