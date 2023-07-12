@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  client:
+    build:
+      context: .
+    image: rent-it-frontend-img
+    container_name: rent-it-frontend
+    restart: always
+networks:
+  default:
+    external: true
+    name: nginx
