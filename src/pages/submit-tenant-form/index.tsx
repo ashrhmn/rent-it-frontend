@@ -4,6 +4,7 @@ import { handleError } from "@/utils/error.utils";
 import { promiseToast } from "@/utils/toast.utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -20,6 +21,7 @@ const formSchema = z.object({
 type IFormData = z.infer<typeof formSchema>;
 
 const SubmitTenantForm = () => {
+  const router = useRouter();
   const {
     register,
     formState: { errors },
@@ -31,7 +33,9 @@ const SubmitTenantForm = () => {
     promiseToast(tmutate({ createTenantFormSubmission: [{ data }, true] }), {
       loading: "Submitting...",
       success: "Success",
-    }).catch(handleError);
+    })
+      .then(() => router.push("/profile"))
+      .catch(handleError);
 
   return (
     <div>
