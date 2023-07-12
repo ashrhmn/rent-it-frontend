@@ -1,6 +1,7 @@
 import { tquery } from "@/tgql";
 import { extractError } from "@/utils/error.utils";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 const OtherPeopleReviews = ({ profileId }: { profileId: string }) => {
   const { data, status, error } = useQuery({
@@ -25,7 +26,12 @@ const OtherPeopleReviews = ({ profileId }: { profileId: string }) => {
         <>
           {data.map(({ id, name, sent_reviews }) => (
             <div className="bg-base-300/40 rounded p-2" key={id}>
-              <h3 className="font-bold text-lg">{name}</h3>
+              <Link
+                href={`/profile/${id}`}
+                className="font-bold text-lg link-hover"
+              >
+                {name}
+              </Link>
               <div className="flex flex-wrap gap-3">
                 {sent_reviews.map(({ category, comment, stars }) => (
                   <div className="bg-neutral/10 p-2 rounded-xl" key={category}>
