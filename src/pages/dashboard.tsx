@@ -34,7 +34,7 @@ const Dashboard = () => {
       <div className="flex flex-col md:flex-row">
         <div className="w-1/2">
           <h1 className="font-bold text-2xl mb-5">Landlord Profiles</h1>
-          <div className="grid md:grid-cols-2">
+          <div className="grid md:grid-cols-2 gap-3">
             {landlordProfiles.map(({ id, name, type }) => (
               <Link
                 className="grid bg-base-300/40 grid-cols-1 p-2 rounded-xl hover:bg-base-300 hover:scale-105 transition-all"
@@ -49,7 +49,7 @@ const Dashboard = () => {
         </div>
         <div className="w-1/2">
           <h1 className="font-bold text-2xl mb-5">Tenant Profiles</h1>
-          <div className="grid md:grid-cols-2">
+          <div className="grid md:grid-cols-2 gap-3">
             {tenantProfiles.map(({ id, name, type }) => (
               <Link
                 className="grid bg-base-300/40 grid-cols-1 p-2 rounded-xl hover:bg-base-300 hover:scale-105 transition-all"

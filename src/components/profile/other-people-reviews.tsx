@@ -28,7 +28,7 @@ const OtherPeopleReviews = ({ profileId }: { profileId: string }) => {
               <h3 className="font-bold text-lg">{name}</h3>
               <div className="flex flex-wrap gap-3">
                 {sent_reviews.map(({ category, comment, stars }) => (
-                  <div className="bg-neutral/40 p-2 rounded-xl" key={category}>
+                  <div className="bg-neutral/10 p-2 rounded-xl" key={category}>
                     <h4>{category}</h4>
                     <h5>Stars : {stars || "Unrated"}</h5>
                     {!!comment && <p>Comment : {comment}</p>}
