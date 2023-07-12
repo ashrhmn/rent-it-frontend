@@ -26,10 +26,10 @@ const ProfileView = ({
 }) => {
   return (
     <div>
-      <div className="flex w-full">
-        <div className="w-4/5">
-          <h1 className="text-6xl font-bold">{profile.name}</h1>
-          <h2 className="font-bold text-xl">{profile.type}</h2>
+      <div className="flex flex-col-reverse md:flex-row w-full">
+        <div className="md:w-4/5">
+          <h1 className="text-6xl font-bold my-4">{profile.name}</h1>
+          <h2 className="font-bold text-xl my-2">{profile.type}</h2>
           {profile.bio && (
             <>
               <h3 className="font-bold">Bio</h3>
@@ -58,7 +58,7 @@ const ProfileView = ({
             </a>
           </h3>
         </div>
-        <div className="rounded-full overflow-hidden w-1/5">
+        <div className="rounded-full overflow-hidden md:w-1/5">
           <img
             className="h-40 w-40 rounded-full"
             src="https://png.pngitem.com/pimgs/s/146-1468281_profile-icon-png-transparent-profile-picture-icon-png.png"
