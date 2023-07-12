@@ -4,7 +4,7 @@ WORKDIR /app
 
 ENV NEXT_PUBLIC_API_BASE_URL=http://rent-it-backend:4000/
 
-COPY package.json yarn.lock /app/
+COPY package.json /app/
 RUN yarn install
 COPY . /app
 RUN yarn build
