@@ -3,6 +3,7 @@ import { tmutate } from "@/tgql";
 import { handleError } from "@/utils/error.utils";
 import { promiseToast } from "@/utils/toast.utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -34,6 +35,9 @@ const SubmitTenantForm = () => {
 
   return (
     <div>
+      <Link href={"/profile"} className="btn btn-ghost">
+        {"< Back"}
+      </Link>
       <h1 className="text-4xl font-bold my-2">Fill Tenant Info</h1>
       <form onSubmit={handleSubmit(handleCreateFormSubmission)}>
         <div className="flex flex-col md:flex-row gap-4 my-4">

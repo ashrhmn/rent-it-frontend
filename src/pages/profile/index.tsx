@@ -24,6 +24,7 @@ const OwnProfile = () => {
             property_state: true,
             property_street_address: true,
             user_id: true,
+            user: { email: true },
           },
         ],
       }).then(({ getProfile }) => getProfile),
