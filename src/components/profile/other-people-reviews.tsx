@@ -1,10 +1,11 @@
-import { tquery } from "@/tgql";
+import { socket, tquery } from "@/tgql";
 import { extractError } from "@/utils/error.utils";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const OtherPeopleReviews = ({ profileId }: { profileId: string }) => {
-  const { data, status, error } = useQuery({
+  const { data, status, error, refetch } = useQuery({
     queryFn: () =>
       tquery({
         getAllReviewsByProfileId: [
@@ -18,6 +19,11 @@ const OtherPeopleReviews = ({ profileId }: { profileId: string }) => {
       }).then((res) => res.getAllReviewsByProfileId),
     queryKey: ["reviews-public", profileId],
   });
+
+  useEffect(() => {
+    socket.on("reviews", refetch);
+  }, [refetch]);
+
   if (status === "error") return <p>{extractError(error)}</p>;
   return (
     <div className="my-8">

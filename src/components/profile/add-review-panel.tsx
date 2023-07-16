@@ -1,6 +1,7 @@
 import ReviewCommentModal from "@/components/profile/review-comment-modal";
-import { tquery } from "@/tgql";
+import { socket, tquery } from "@/tgql";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCallback, useEffect } from "react";
 
 const AddReviewPanel = ({ profileId }: { profileId: string }) => {
   const queryClient = useQueryClient();
@@ -20,10 +21,14 @@ const AddReviewPanel = ({ profileId }: { profileId: string }) => {
     queryKey: ["reviews-by-logged-in-user", profileId],
   });
 
-  const refetch = () => {
+  const refetch = useCallback(() => {
     refetchReviews();
     queryClient.invalidateQueries(["reviews-public", profileId]);
-  };
+  }, [profileId, queryClient, refetchReviews]);
+
+  useEffect(() => {
+    socket.on("reviews", refetch);
+  }, [refetch]);
 
   return (
     <div>

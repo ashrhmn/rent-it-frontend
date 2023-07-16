@@ -1,4 +1,5 @@
 import { Thunder } from "@/generated/zeus";
+import { io } from "socket.io-client";
 
 export const tgql = Thunder(async (query) => {
   const response = await fetch(`/api`, {
@@ -58,3 +59,6 @@ export const tgql = Thunder(async (query) => {
 
 export const tquery = tgql("query");
 export const tmutate = tgql("mutation");
+export const socket = io(
+  process.env.NEXT_PUBLIC_SOCKET_URL || "https://socket.rent-it.n3xchain.com/"
+);
